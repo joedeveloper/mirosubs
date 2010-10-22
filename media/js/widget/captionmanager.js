@@ -176,6 +176,7 @@ mirosubs.CaptionManager.prototype.dispatchCaptionEvent_ = function(caption) {
 };
 
 mirosubs.CaptionManager.prototype.disposeInternal = function() {
+  this.dispatchCaptionEvent_(null);
     mirosubs.CaptionManager.superClass_.disposeInternal.call(this);
     this.eventHandler_.dispose();
 };
