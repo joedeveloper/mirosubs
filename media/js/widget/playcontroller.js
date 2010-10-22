@@ -1,29 +1,29 @@
 // Universal Subtitles, universalsubtitles.org
-// 
+//
 // Copyright (C) 2010 Participatory Culture Foundation
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
 // published by the Free Software Foundation, either version 3 of the
 // License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see 
+// along with this program.  If not, see
 // http://www.gnu.org/licenses/agpl-3.0.html.
 
 goog.provide('mirosubs.widget.PlayController');
 
 /**
  * @constructor
- * 
+ *
  */
 mirosubs.widget.PlayController = function(
-    videoID, videoSource, videoPlayer, videoTab, dropDown, opt_subtitleState) 
+    videoID, videoSource, videoPlayer, videoTab, dropDown, opt_subtitleState)
 {
     goog.Disposable.call(this);
     this.videoID_ = videoID;
@@ -68,12 +68,13 @@ mirosubs.widget.PlayController.prototype.turnOffSubs = function() {
     this.dropDown_.hide();
     this.videoTab_.showNudge(false);
     this.disposeComponents_();
+    this.videoPlayer_.showCaptionText('');
     this.subtitleState_ = null;
     this.videoTab_.showContent(this.dropDown_.hasSubtitles());
 };
 
 /**
- * Returns a non-null value if and only if subs are not turned off for the 
+ * Returns a non-null value if and only if subs are not turned off for the
  * the video right now.
  */
 mirosubs.widget.PlayController.prototype.getSubtitleState = function() {
@@ -84,14 +85,14 @@ mirosubs.widget.PlayController.prototype.getVideoSource = function() {
     return this.videoSource_;
 };
 
-mirosubs.widget.PlayController.prototype.setUpSubs_ = 
-    function(subtitleState) 
+mirosubs.widget.PlayController.prototype.setUpSubs_ =
+    function(subtitleState)
 {
     this.disposeComponents_();
     this.subtitleState_ = subtitleState;
     var captionSet = new mirosubs.subtitle.EditableCaptionSet(
         subtitleState.SUBTITLES);
-    this.captionManager_ = 
+    this.captionManager_ =
         new mirosubs.CaptionManager(this.videoPlayer_, captionSet);
     this.playEventHandler_ = new goog.events.EventHandler(this);
     this.playEventHandler_.
@@ -132,7 +133,7 @@ mirosubs.widget.PlayController.prototype.finished_ = function() {
     var message = !!this.subtitleState_.LANGUAGE ?
         "Improve this Translation" : "Improve these Subtitles";
     this.videoTab_.updateNudge(
-        message, 
+        message,
         goog.bind(this.subtitleController_.openSubtitleDialog,
                   this.subtitleController_));
     this.videoTab_.showNudge(true);
